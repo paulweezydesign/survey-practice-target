@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consumer Habits Survey 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #1c1e21;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.12);
+    width: 100%;
+    max-width: 640px;
+    padding: 32px 36px;
+  }
+  .brand { color: #5a4fcf; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+  h1 { font-size: 22px; margin: 6px 0 4px; }
+  .subtitle { color: #606770; font-size: 14px; margin-bottom: 20px; }
+  .progress { height: 6px; background: #e4e6eb; border-radius: 3px; margin-bottom: 26px; overflow: hidden; }
+  .progress > div { height: 100%; background: #5a4fcf; width: 33%; transition: width .3s; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .q { margin-bottom: 22px; }
+  .q label.qtitle { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; }
+  .q .hint { font-size: 12px; color: #8a8d91; margin-bottom: 8px; }
+  .opt { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 14px; }
+  select, input[type="text"], textarea {
+    width: 100%; padding: 9px 10px; border: 1px solid #ccd0d5; border-radius: 6px;
+    font-size: 14px; font-family: inherit;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+  .nav { display: flex; justify-content: space-between; margin-top: 28px; }
+  button {
+    background: #5a4fcf; color: #fff; border: none; padding: 10px 26px;
+    border-radius: 6px; font-size: 15px; cursor: pointer; font-weight: 600;
+  }
+  button.secondary { background: #e4e6eb; color: #1c1e21; }
+  button:hover { opacity: .92; }
+  .hp-field { position: absolute; left: -9999px; top: -9999px; height: 1px; width: 1px; overflow: hidden; }
+  .thanks { text-align: center; padding: 30px 0; }
+  .error-msg { color: #c00; font-size: 13px; margin-top: 12px; display: none; font-weight: 600; }
+  .thanks h2 { color: #2e7d32; margin-bottom: 10px; }
+  .conf {
+    display: inline-block; margin-top: 14px; padding: 10px 18px; background: #f0f2f5;
+    border-radius: 6px; font-family: monospace; font-size: 16px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">PanelInsight Research</div>
+  <h1>Consumer Habits Survey 2026</h1>
+  <div class="subtitle">Thank you for participating. This survey takes about 3 minutes.</div>
+  <div class="progress"><div id="bar"></div></div>
+
+  <form id="surveyForm" onsubmit="return false;">
+    <!-- Honeypot: invisible to humans, visible to naive bots -->
+    <div class="hp-field" aria-hidden="true">
+      <label for="website">Website</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <!-- PAGE 1: Demographics -->
+    <div class="page active" data-page="1">
+      <div class="q">
+        <label class="qtitle">1. What is your age range?</label>
+        <label class="opt"><input type="radio" name="age" value="18-24" /> 18–24</label>
+        <label class="opt"><input type="radio" name="age" value="25-34" /> 25–34</label>
+        <label class="opt"><input type="radio" name="age" value="35-44" /> 35–44</label>
+        <label class="opt"><input type="radio" name="age" value="45-54" /> 45–54</label>
+        <label class="opt"><input type="radio" name="age" value="55-64" /> 55–64</label>
+        <label class="opt"><input type="radio" name="age" value="65+" /> 65 or older</label>
+      </div>
+      <div class="q">
+        <label class="qtitle">2. What is your gender?</label>
+        <label class="opt"><input type="radio" name="gender" value="Male" /> Male</label>
+        <label class="opt"><input type="radio" name="gender" value="Female" /> Female</label>
+        <label class="opt"><input type="radio" name="gender" value="Non-binary" /> Non-binary</label>
+        <label class="opt"><input type="radio" name="gender" value="Prefer not to say" /> Prefer not to say</label>
+      </div>
+      <div class="q">
+        <label class="qtitle" for="region">3. Which region do you live in?</label>
+        <select id="region" name="region">
+          <option value="">Select a region…</option>
+          <option>Northeast</option>
+          <option>Southeast</option>
+          <option>Midwest</option>
+          <option>Southwest</option>
+          <option>West</option>
+          <option>Mountain</option>
+          <option>Pacific Northwest</option>
+        </select>
+      </div>
+      <div class="q">
+        <label class="qtitle" for="zip">4. What is your ZIP code?</label>
+        <input type="text" id="zip" name="zip" placeholder="e.g. 80202" maxlength="10" />
+      </div>
+    </div>
+
+    <!-- PAGE 2: Consumer habits -->
+    <div class="page" data-page="2">
+      <div class="q">
+        <label class="qtitle">5. Which of these services do you use at least weekly? (Select all that apply)</label>
+        <label class="opt"><input type="checkbox" name="services" value="Netflix" /> Netflix</label>
+        <label class="opt"><input type="checkbox" name="services" value="YouTube" /> YouTube</label>
+        <label class="opt"><input type="checkbox" name="services" value="Spotify" /> Spotify</label>
+        <label class="opt"><input type="checkbox" name="services" value="TikTok" /> TikTok</label>
+        <label class="opt"><input type="checkbox" name="services" value="Cable TV" /> Cable TV</label>
+        <label class="opt"><input type="checkbox" name="services" value="Amazon Prime Video" /> Amazon Prime Video</label>
+        <label class="opt"><input type="checkbox" name="services" value="Twitch" /> Twitch</label>
+      </div>
+      <div class="q">
+        <label class="qtitle">6. How often do you shop online?</label>
+        <label class="opt"><input type="radio" name="shopfreq" value="Daily" /> Daily</label>
+        <label class="opt"><input type="radio" name="shopfreq" value="Weekly" /> Weekly</label>
+        <label class="opt"><input type="radio" name="shopfreq" value="A few times a month" /> A few times a month</label>
+        <label class="opt"><input type="radio" name="shopfreq" value="Rarely" /> Rarely</label>
+        <label class="opt"><input type="radio" name="shopfreq" value="Never" /> Never</label>
+      </div>
+      <div class="q">
+        <label class="qtitle" for="grocery">7. Where do you buy most of your groceries?</label>
+        <select id="grocery" name="grocery">
+          <option value="">Select a store…</option>
+          <option>Walmart</option>
+          <option>Kroger</option>
+          <option>Costco</option>
+          <option>Whole Foods</option>
+          <option>Publix</option>
+          <option>H-E-B</option>
+          <option>Aldi</option>
+          <option>Local/independent store</option>
+        </select>
+      </div>
+      <div class="q">
+        <label class="qtitle">8. To show you are reading carefully, please select "Strongly agree" for this question.</label>
+        <div class="hint">Quality-control question.</div>
+        <label class="opt"><input type="radio" name="attn" value="Strongly disagree" /> Strongly disagree</label>
+        <label class="opt"><input type="radio" name="attn" value="Disagree" /> Disagree</label>
+        <label class="opt"><input type="radio" name="attn" value="Neutral" /> Neutral</label>
+        <label class="opt"><input type="radio" name="attn" value="Agree" /> Agree</label>
+        <label class="opt"><input type="radio" name="attn" value="Strongly agree" /> Strongly agree</label>
+      </div>
+    </div>
+
+    <!-- PAGE 3: Open text -->
+    <div class="page" data-page="3">
+      <div class="q">
+        <label class="qtitle" for="phone">9. What phone do you currently use, and why did you choose it? <span style="color:#c00">*</span></label>
+        <textarea id="phone" name="phone" required placeholder="Tell us in your own words…"></textarea>
+      </div>
+      <div class="q">
+        <label class="qtitle" for="improve">10. What is one thing stores or brands could do to serve you better? <span style="color:#c00">*</span></label>
+        <textarea id="improve" name="improve" required placeholder="Your answer…"></textarea>
+      </div>
+      <div class="q">
+        <label class="qtitle" for="other">11. Anything else you'd like to share? (Optional)</label>
+        <textarea id="other" name="other" placeholder="Optional comments…"></textarea>
+      </div>
+    </div>
+
+    <!-- THANK YOU -->
+    <div class="page thanks" data-page="4">
+      <h2>✅ Thank you!</h2>
+      <p>Your responses have been recorded.</p>
+      <div class="conf" id="confCode"></div>
+    </div>
+
+    <div class="error-msg" id="errMsg">Please answer all required questions on this page before continuing.</div>
+    <div class="nav">
+      <button type="button" class="secondary" id="backBtn" style="visibility:hidden">Back</button>
+      <button type="button" id="nextBtn">Next</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  let page = 1;
+  const total = 3;
+  const pages = document.querySelectorAll('.page');
+  const bar = document.getElementById('bar');
+  const backBtn = document.getElementById('backBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const errMsg = document.getElementById('errMsg');
+
+  function show(p) {
+    pages.forEach(el => el.classList.toggle('active', el.dataset.page == p));
+    bar.style.width = Math.min(100, (p / (total + 1)) * 100) + '%';
+    backBtn.style.visibility = p > 1 && p <= total ? 'visible' : 'hidden';
+    nextBtn.textContent = p === total ? 'Submit' : 'Next';
+    if (p > total) nextBtn.style.visibility = 'hidden';
+    window.scrollTo(0, 0);
+  }
+
+  // Realistic client-side validation: required questions per page
+  function pageValid(p) {
+    const el = document.querySelector(`.page[data-page="${p}"]`);
+    if (!el) return true;
+    // required textareas / text inputs / selects
+    for (const field of el.querySelectorAll('textarea[required], input[type="text"], select')) {
+      if (field.id === 'website') continue; // honeypot
+      if (!field.value.trim()) return false;
+    }
+    // radio groups: at least one checked per group
+    const groups = new Set([...el.querySelectorAll('input[type="radio"]')].map(r => r.name));
+    for (const g of groups) {
+      if (!el.querySelector(`input[name="${g}"]:checked`)) return false;
+    }
+    // page 2: at least one service checkbox
+    if (p === 2 && !el.querySelector('input[name="services"]:checked')) return false;
+    return true;
+  }
+
+  backBtn.addEventListener('click', () => { if (page > 1) { page--; errMsg.style.display = 'none'; show(page); } });
+  nextBtn.addEventListener('click', () => {
+    if (!pageValid(page)) { errMsg.style.display = 'block'; return; }
+    errMsg.style.display = 'none';
+    if (page < total) { page++; show(page); return; }
+    // "Submit": build a confirmation code and show the thank-you page
+    const code = 'CONF-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+    document.getElementById('confCode').textContent = 'Confirmation: ' + code;
+    document.title = 'Survey Complete - Thank You';
+    page = total + 1;
+    show(page);
+  });
+
+  show(1);
+</script>
+</body>
+</html>
